@@ -1,0 +1,21 @@
+{
+  "name": "english-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.1",
+    "nightmare": "^2.10.0"
+  },
+  "devDependencies": {
+    "@types/cheerio": "^0.22.1",
+    "@types/nightmare": "^1.6.31",
+    "typescript": "^2.3.4"
+  }
+}
