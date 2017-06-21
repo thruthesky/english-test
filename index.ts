@@ -16,12 +16,13 @@ class SiteTest {
     }
 
     async run() {
-        await this.livechat();
         await this.open();
+        
         await this.register();
         await this.logout();
         await this.login();
         await this.infoUpdate();
+        await this.livechat();
         
 
     }
@@ -43,13 +44,13 @@ class SiteTest {
     async open() {
         this.testBegin('open');
         let re = await this.nightmare
-            .goto('https://www.englishfordevelopers.com')
-            .wait("#chat-component")
-            .click("#chat-component .min > div")
-            .wait(".chat.max")
-            .evaluate(() => {
-                return document.querySelector('body').innerHTML;
-            })
+            .goto('http://localhost:4200/')
+            // .wait("#chat-component")
+            // .click("#chat-component .min > div")
+            // .wait(".chat.max")
+            // .evaluate(() => {
+            //     return document.querySelector('body').innerHTML;
+            // })
             .then(x => x)
             .catch(e => e);
 
@@ -62,7 +63,7 @@ class SiteTest {
 
 
     async register() {
-
+        this.testBegin("register");
 
         let re = await this.nightmare
             .click('.fa-bars')
@@ -76,6 +77,8 @@ class SiteTest {
         
         await this.nightmare
             .type('[name="id"]', 'test-id')
+            .type('[name="password"]', 'test-password')
+            .wait(2000)
             .then( x => x );
             
 
@@ -91,7 +94,11 @@ class SiteTest {
     async infoUpdate() {
 
     }
-
+    async closeChatComponent() {
+        await this.nightmare
+            .wait('#chat-component .closer')
+            .click('#chat-component .closer');
+    }
     async livechat() {
         this.testBegin("livechat");
 
@@ -104,7 +111,7 @@ class SiteTest {
             .evaluate(() => {
                 return document.querySelector('body').innerHTML;
             })
-            .click('#chat-component .closer')
+            
             .then(x => x)
             .catch(e => e);
             
@@ -120,14 +127,19 @@ class SiteTest {
             .find("span.text")
             .text();
 
-        if (msg == Time) this.success("Live chat is working fine !!");
-        else this.error("Oo.. :(   Live chat is not working");
+        if (msg == Time) {
+            this.closeChatComponent();
+            this.success("Live chat is working fine !!");
+        }
+        
+        else {
+            this.closeChatComponent();
+            this.error("Oo.. :(   Live chat is not working");
+        } 
+        
     }
 
-
-
 }
-
 
 (new SiteTest()).run();
 

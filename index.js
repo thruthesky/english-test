@@ -48,22 +48,22 @@ var SiteTest = (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.livechat()];
+                    case 0: return [4 /*yield*/, this.open()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.open()];
+                        return [4 /*yield*/, this.register()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.register()];
+                        return [4 /*yield*/, this.logout()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.logout()];
+                        return [4 /*yield*/, this.login()];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.login()];
+                        return [4 /*yield*/, this.infoUpdate()];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.infoUpdate()];
+                        return [4 /*yield*/, this.livechat()];
                     case 6:
                         _a.sent();
                         return [2 /*return*/];
@@ -91,13 +91,7 @@ var SiteTest = (function () {
                     case 0:
                         this.testBegin('open');
                         return [4 /*yield*/, this.nightmare
-                                .goto('https://www.englishfordevelopers.com')
-                                .wait("#chat-component")
-                                .click("#chat-component .min > div")
-                                .wait(".chat.max")
-                                .evaluate(function () {
-                                return document.querySelector('body').innerHTML;
-                            })
+                                .goto('http://localhost:4200/')
                                 .then(function (x) { return x; })
                                 .catch(function (e) { return e; })];
                     case 1:
@@ -114,18 +108,22 @@ var SiteTest = (function () {
             var re;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.nightmare
-                            .click('.fa-bars')
-                            .wait('#small-header-register-button')
-                            .click('#small-header-register-button')
-                            .evaluate(function () {
-                            return document.querySelector('body').innerHTML;
-                        })
-                            .then(function (x) { return x; })];
+                    case 0:
+                        this.testBegin("register");
+                        return [4 /*yield*/, this.nightmare
+                                .click('.fa-bars')
+                                .wait('#small-header-register-button')
+                                .click('#small-header-register-button')
+                                .evaluate(function () {
+                                return document.querySelector('body').innerHTML;
+                            })
+                                .then(function (x) { return x; })];
                     case 1:
                         re = _a.sent();
                         return [4 /*yield*/, this.nightmare
                                 .type('[name="id"]', 'test-id')
+                                .type('[name="password"]', 'test-password')
+                                .wait(2000)
                                 .then(function (x) { return x; })];
                     case 2:
                         _a.sent();
@@ -155,6 +153,20 @@ var SiteTest = (function () {
             });
         });
     };
+    SiteTest.prototype.closeChatComponent = function () {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.nightmare
+                            .wait('#chat-component .closer')
+                            .click('#chat-component .closer')];
+                    case 1:
+                        _a.sent();
+                        return [2 /*return*/];
+                }
+            });
+        });
+    };
     SiteTest.prototype.livechat = function () {
         return __awaiter(this, void 0, void 0, function () {
             var re, msg, $, Time;
@@ -170,7 +182,6 @@ var SiteTest = (function () {
                                 .evaluate(function () {
                                 return document.querySelector('body').innerHTML;
                             })
-                                .click('#chat-component .closer')
                                 .then(function (x) { return x; })
                                 .catch(function (e) { return e; })];
                     case 1:
@@ -182,10 +193,14 @@ var SiteTest = (function () {
                             .find(".messages")
                             .find("span.text")
                             .text();
-                        if (msg == Time)
+                        if (msg == Time) {
+                            this.closeChatComponent();
                             this.success("Live chat is working fine !!");
-                        else
+                        }
+                        else {
+                            this.closeChatComponent();
                             this.error("Oo.. :(   Live chat is not working");
+                        }
                         return [2 /*return*/];
                 }
             });
