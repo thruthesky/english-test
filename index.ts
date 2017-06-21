@@ -16,13 +16,13 @@ class SiteTest {
     }
 
     async run() {
-
+        await this.livechat();
         await this.open();
         await this.register();
         await this.logout();
         await this.login();
         await this.infoUpdate();
-        await this.livechat();
+        
 
     }
 
@@ -43,7 +43,7 @@ class SiteTest {
     async open() {
         this.testBegin('open');
         let re = await this.nightmare
-            .goto('https://englishfordevelopers.com')
+            .goto('https://www.englishfordevelopers.com')
             .wait("#chat-component")
             .click("#chat-component .min > div")
             .wait(".chat.max")
@@ -104,8 +104,10 @@ class SiteTest {
             .evaluate(() => {
                 return document.querySelector('body').innerHTML;
             })
+            .click('#chat-component .closer')
             .then(x => x)
             .catch(e => e);
+            
 
         let $ = j.load(<any>re);
         this.log("Typed chat message.");

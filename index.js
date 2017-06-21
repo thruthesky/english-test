@@ -48,22 +48,22 @@ var SiteTest = (function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.open()];
+                    case 0: return [4 /*yield*/, this.livechat()];
                     case 1:
                         _a.sent();
-                        return [4 /*yield*/, this.register()];
+                        return [4 /*yield*/, this.open()];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this.logout()];
+                        return [4 /*yield*/, this.register()];
                     case 3:
                         _a.sent();
-                        return [4 /*yield*/, this.login()];
+                        return [4 /*yield*/, this.logout()];
                     case 4:
                         _a.sent();
-                        return [4 /*yield*/, this.infoUpdate()];
+                        return [4 /*yield*/, this.login()];
                     case 5:
                         _a.sent();
-                        return [4 /*yield*/, this.livechat()];
+                        return [4 /*yield*/, this.infoUpdate()];
                     case 6:
                         _a.sent();
                         return [2 /*return*/];
@@ -91,7 +91,7 @@ var SiteTest = (function () {
                     case 0:
                         this.testBegin('open');
                         return [4 /*yield*/, this.nightmare
-                                .goto('https://englishfordevelopers.com')
+                                .goto('https://www.englishfordevelopers.com')
                                 .wait("#chat-component")
                                 .click("#chat-component .min > div")
                                 .wait(".chat.max")
@@ -170,6 +170,7 @@ var SiteTest = (function () {
                                 .evaluate(function () {
                                 return document.querySelector('body').innerHTML;
                             })
+                                .click('#chat-component .closer')
                                 .then(function (x) { return x; })
                                 .catch(function (e) { return e; })];
                     case 1:
